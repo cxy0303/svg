@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="Scripts/snap.min.js"></script>
+    <script type="text/javascript" src="Scripts/sunagy.humidity.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#test").Humidity({
+                parentid: 'test', //父容器id
+                px: 200,         //相对与parentid x坐标
+                py: 200,        //相对于parentid y坐标
+                //parentid,px,py全部有值才有效
+                width: 150,     //宽度
+                height: 150,    //高度
+                current: 150,    //当前值,百分比，0-100，如果需要自动从服务器获取数据，格式为：{url:'',delay:3000}delay为读取服务器时间间隔，最小为3000（3s）
+                isnormal: 0,    //是否正常状态；0:异常，1：正常
+                unit: '%',      //单位
+                title: '湿度'   //标题
+            })
+
+            $("#change").click(function () {
+                $("#test").Humidity('setcurrent', $("#value").val(), 1);
+            })
+        })
+    </script>
+    <title></title>
+</head>
+<body>
+    <div style="width:100%; text-align:center;">
+        <input id="change" type="button" value="改变" />
+        <input id="value" type="text" value="" />
+        <div id="test">
+        </div>
+    </div>
+</body>
+</html>

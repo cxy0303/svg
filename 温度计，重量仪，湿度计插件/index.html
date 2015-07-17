@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script type="text/javascript" src="Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="Scripts/snap.min.js"></script>
+    <script type="text/javascript" src="Scripts/sunagy.thermometer.js"></script>
+    <script type="text/javascript" src="Scripts/sunagy.weightmeter.js"></script>
+    <script type="text/javascript" src="Scripts/sunagy.humidity.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $("#test1").Weightmeter({
+                parentid: 'div',
+                px: 600,
+                py: 100,
+                width: 150,
+                height: 200,
+                current: 80,
+                isnormal: 0,
+                max: 100,
+                min: 0,
+                current: {
+                    url: 'getdata.aspx',//返回格式{current:40,isnormal:1}
+                    delay: 3000
+                },
+                unit: 'kg'
+            });
+
+            $("#test2").Thermometer({
+                parentid: 'div',
+                px: 460,
+                py: 290,
+                width: 100,
+                height: 250,
+                title: '温度计',
+                isnormal: 0,
+                current: {
+                    url: 'getdata.aspx',//返回格式{current:40,isnormal:1}
+                    delay: 3000
+                },
+                unit: '℃',
+                max: 100,
+                min: 0
+            });
+
+            $("#test").Humidity({
+                parentid: 'div',
+                px: 625,
+                py: 250,
+                width: 100,
+                height: 200,
+                current: 20,
+                isnormal: 0,
+                current: {
+                    url: 'getdata.aspx',//返回格式{current:40,isnormal:1}
+                    delay: 3000
+                },
+                unit: '%',
+                title: '湿度'
+            });
+        })
+    </script>
+
+</head>
+<body>
+    <div id="div">
+        <div id="test"></div>
+        <div id="test2"></div>
+        <div id="test1"></div>
+    </div>
+</body>
+</html>
