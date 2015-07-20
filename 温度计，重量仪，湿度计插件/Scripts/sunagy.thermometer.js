@@ -98,7 +98,7 @@
             var svgs = $(this).find("svg");
             var svg = svgs[0];
             if (svg != null && svg != undefined) {
-                if (opts.parentid != undefined && opts.px != undefined && opts.py != undefined) {
+                if (opts.parentid != ''&& opts.px != undefined && opts.py != undefined) {
                     $(this).appendTo("#" + opts.parentid);
                     $(opts.parentid).css("position", "relative");
                     $(this).css("position", "absolute");

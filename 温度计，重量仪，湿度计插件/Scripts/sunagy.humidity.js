@@ -61,7 +61,7 @@
 
             $(this).width(opts.width);
             $(this).height(opts.height);
-            if (opts.parentid != undefined && opts.px != undefined && opts.py != undefined) {
+            if (opts.parentid != ''&& opts.px != undefined && opts.py != undefined) {
                 $(pid).css("position", "relative");
                 $(this).css("position", "absolute");
                 $(this).css("top", opts.py);
