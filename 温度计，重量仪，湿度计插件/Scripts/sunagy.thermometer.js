@@ -104,7 +104,9 @@
                     $(this).css("position", "absolute");
                     $(this).css("top", opts.py);
                     $(this).css("left", opts.px);
-                }
+                }else{
+		$(this).css("margin", "auto");
+	    }
                 $(this).css("width", opts.width);
                 $(this).css("height", opts.height);
                 this.svg = svg;

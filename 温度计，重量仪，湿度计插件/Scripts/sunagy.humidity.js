@@ -66,7 +66,9 @@
                 $(this).css("position", "absolute");
                 $(this).css("top", opts.py);
                 $(this).css("left", opts.px);
-            }
+            }else{
+		$(this).css("margin", "auto");
+	    }
             this.empty();
             this.append($.fn.Humidity.GetHumidityHtml(this.Index));
             this.svg = Snap("#humidity_" + this.Index);

@@ -76,7 +76,9 @@
                 $(this).css("position", "absolute");
                 $(this).css("top", opts.py);
                 $(this).css("left", opts.px);
-            }
+            }else{
+		$(this).css("margin", "auto");
+	    }
             this.empty();
             this.append($.fn.Weightmeter.GetWeightmeterHtml(this.Index));
             this.svg = Snap("#weightmeter_" + this.Index);
