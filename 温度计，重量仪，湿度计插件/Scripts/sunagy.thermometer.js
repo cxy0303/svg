@@ -1,7 +1,6 @@
 ﻿(function ($) {
     $.fn.Thermometer = function (options, value, isnormal) {
         var dft = {
-            parentid: '',       //容器
             px: 0,              //相对与parentid x坐标
             py: 0,              //相对于parentid y坐标
             //parentid,px,py全部有值才有效
@@ -96,9 +95,7 @@
             var svgs = $(this).find("svg");
             var svg = svgs[0];
             if (svg != null && svg != undefined) {
-                if (opts.parentid != '' && opts.px != undefined && opts.py != undefined) {
-                    $(this).appendTo("#" + opts.parentid);
-                    $(opts.parentid).css("position", "relative");
+                if (opts.px != undefined && opts.py != undefined) {
                     $(this).css("position", "absolute");
                     $(this).css("top", opts.py);
                     $(this).css("left", opts.px);

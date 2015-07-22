@@ -1,10 +1,8 @@
 ﻿(function ($) {
     $.fn.Humidity = function (options, value, isnormal) {
         var dft = {
-            parentid: '',       //容器
             px: 0,              //相对与parentid x坐标
             py: 0,              //相对于parentid y坐标
-            //parentid,px,py全部有值才有效
             width: 120,         //面板宽度
             height: 150,        //面板高度
             current: 0,         //当前湿度
@@ -56,13 +54,10 @@
         }
 
         this.intil = function (opts) {
-            var pid = "#" + opts.parentid;
-            this.appendTo(pid);
 
             $(this).width(opts.width);
             $(this).height(opts.height);
-            if (opts.parentid != ''&& opts.px != undefined && opts.py != undefined) {
-                $(pid).css("position", "relative");
+            if (opts.px != undefined && opts.py != undefined) {
                 $(this).css("position", "absolute");
                 $(this).css("top", opts.py);
                 $(this).css("left", opts.px);
