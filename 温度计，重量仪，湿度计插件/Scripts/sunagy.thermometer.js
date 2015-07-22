@@ -1,5 +1,5 @@
 ﻿(function ($) {
-    $.fn.Thermometer = function (options, value,isnormal) {
+    $.fn.Thermometer = function (options, value, isnormal) {
         var dft = {
             parentid: '',       //容器
             px: 0,              //相对与parentid x坐标
@@ -36,7 +36,9 @@
 
         this.SetCurrent = function (num, isnormal) {
             if (num < this.Min)
-                return;
+                num = this.Min;
+            if (num > this.Max)
+                num = this.Max;
             var rct_panel = Snap("#thermometer_rct_panel_" + this.Tindex);
             var rct_current = Snap("#thermometer_rct_current_" + this.Tindex);
             var txt_current = Snap("#thermometer_svg_current_" + this.Tindex);
@@ -46,19 +48,15 @@
 
             //温度水银柱高度变化动画
             var fromheight = parseFloat(rct_panel.attr("height"));
-            var toheight = heightsum - num * 240 / value;
+            var toheight = heightsum - (num - this.Min) * 240 / value;
 
             rct_panel.animate({ height: toheight }, 1000, mina.Linear);
-            var txt_y = 305 - num * 240 / value;
+            var txt_y = 305 - (num-this.Min) * 240 / value;
             txt_current.animate({ y: txt_y }, 1000, mina.linear);
             var opts = this.Opts;
             Snap.animate(parseFloat(txt_current.attr("text")), num, function (v) {
                 txt_current.attr({ text: parseInt(v) + opts.unit });
             }, 1000)
-            if (num >= 100)
-                txt_current.attr("x", 78);
-            else
-                txt_current.attr("x", 85);
 
             var cIsnormal = txt_current.data("isnormal") == undefined ? 1 : txt_current.data("isnormal");
 
@@ -87,7 +85,7 @@
             this.Max = this.Opts.max;
             this.Min = this.Opts.min;
             if (options == "setcurrent") {
-                this.SetCurrent(value,isnormal);
+                this.SetCurrent(value, isnormal);
             }
         } else {
             var opts = $.extend(dft, options);
@@ -98,15 +96,15 @@
             var svgs = $(this).find("svg");
             var svg = svgs[0];
             if (svg != null && svg != undefined) {
-                if (opts.parentid != ''&& opts.px != undefined && opts.py != undefined) {
+                if (opts.parentid != '' && opts.px != undefined && opts.py != undefined) {
                     $(this).appendTo("#" + opts.parentid);
                     $(opts.parentid).css("position", "relative");
                     $(this).css("position", "absolute");
                     $(this).css("top", opts.py);
                     $(this).css("left", opts.px);
-                }else{
-		$(this).css("margin", "auto");
-	    }
+                } else {
+                    $(this).css("margin", "auto");
+                }
                 $(this).css("width", opts.width);
                 $(this).css("height", opts.height);
                 this.svg = svg;
