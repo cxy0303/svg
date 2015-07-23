@@ -1,8 +1,8 @@
 ﻿(function ($) {
     $.fn.Thermometer = function (options, value, isnormal) {
         var dft = {
-            px: 0,              //相对与parentid x坐标
-            py: 0,              //相对于parentid y坐标
+            px: undefined,              //相对与parentid x坐标
+            py: undefined,              //相对于parentid y坐标
             //parentid,px,py全部有值才有效
             width: 130,         //面板宽度
             height: 400,        //面板高度

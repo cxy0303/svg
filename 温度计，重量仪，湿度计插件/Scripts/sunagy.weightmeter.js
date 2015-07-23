@@ -1,8 +1,8 @@
 ﻿(function ($) {
     $.fn.Weightmeter = function (options, value, isnormal) {
         var dft = {
-            px: 0,              //相对于父容器 x坐标
-            py: 0,              //相对于父容器y坐标
+            px: undefined,              //相对于父容器 x坐标
+            py: undefined,              //相对于父容器y坐标
             width: 130,         //面板宽度
             height: 400,        //面板高度
             max: 50,            //重量最大值

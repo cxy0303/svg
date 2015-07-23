@@ -1,8 +1,8 @@
 ﻿(function ($) {
     $.fn.Humidity = function (options, value, isnormal) {
         var dft = {
-            px: 0,              //相对与parentid x坐标
-            py: 0,              //相对于parentid y坐标
+            px:undefined,              //相对与parentid x坐标
+            py:undefined,              //相对于parentid y坐标
             width: 120,         //面板宽度
             height: 150,        //面板高度
             current: 0,         //当前湿度
