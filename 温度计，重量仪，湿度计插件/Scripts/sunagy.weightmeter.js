@@ -10,7 +10,7 @@
             current: 0,         //当前重量
             unit: '',            //单位
             isnormal: 1,       //重量是否正常;1表示正常，0不正常
-            title: '重量'
+            title: '二楼会议室风机盘管风机模式设定'
         }
 
 
@@ -70,9 +70,9 @@
                 $(this).css("position", "absolute");
                 $(this).css("top", opts.py);
                 $(this).css("left", opts.px);
-            }else{
-		$(this).css("margin", "auto");
-	    }
+            } else {
+                $(this).css("margin", "auto");
+            }
             this.empty();
             this.append($.fn.Weightmeter.GetWeightmeterHtml(this.Index));
             this.svg = Snap("#weightmeter_" + this.Index);
@@ -91,7 +91,7 @@
                 filter: shadow
             })
 
-            this.svg.select("#t_title").attr({ text: opts.title });
+            this.svg.select("#t_title").node.textContent = opts.title;
             this.svg.select("#t_current").attr({ text: 0 });
             var v = (opts.max - opts.min) / 20;
             this.svg.select('#t1').attr({ text: opts.min });
@@ -143,7 +143,7 @@
     }
     $.fn.Weightmeter.GetWeightmeterHtml = function (index) {
         var html = [];
-        html.push('<svg id="weightmeter_' + index + '"  viewBox="0,0,350,200" preserveAspectRatio="xMidYMid meet">');
+        html.push('<svg id="weightmeter_' + index + '"  viewBox="-10,0,380,200" preserveAspectRatio="xMidYMid meet">');
         html.push('<defs>');
         html.push('<linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">');
         html.push('                    <stop offset="0%" stop-color="#ECF5FF" stop-opacity="0"></stop>');
@@ -168,6 +168,7 @@
         html.push('<text id="t4"  x="225" y="105"  font-size="200%">20</text>');
         html.push('<text id="t5"  x="65%" y="81%"  font-size="200%">20</text>');
         html.push('</clipPath>');
+        html.push('<path id="textpath" d="M15 162 A110,111 1 1 1 335,162"></path>');
         html.push('</defs>');
         html.push('<path id="panel" d="M25 160 A100,100 1 1 1 325,160 A2,2 1 1 1 320 160 A96,96 1 1 0 30 160 A2,2 1 1 1 25,160" stroke="#66B3FF"');
         html.push('stroke-width="1" fill="#66B3FF"></path>');
@@ -180,8 +181,12 @@
         html.push('</g>');
         html.push('<g font-weight="bolder" fill="#66B3FF" font-size="200%">');
 
-        html.push('<text id="t_title"  x="50%" y="120"  text-anchor="middle">重量kg</text>');
-        html.push('<text id="t_current"  x="50%" y="220"  text-anchor="middle"  font-size="150%" >100<text>');
+        html.push('<text x="65%" y="0"  text-anchor="middle" font-size="90%">');
+        html.push('<textPath  id="t_title"   xlink:href="#textpath">');
+        html.push('</textPath>');
+        html.push('</text>');
+        html.push('<text id="t_current"  x="50%" y="220"  text-anchor="middle"  font-size="150%" >');
+        html.push('<text>');
         html.push('</g>');
         html.push('<path id="pointer" d="M50 160 L175 152  L188 160 L188 160 L175 168z" fill="#00DB00" >');
         html.push('</path>');
