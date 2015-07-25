@@ -143,7 +143,7 @@
     }
     $.fn.Thermometer.GetThermometerHtml = function (index) {
         var svghtml = [];
-        svghtml.push('<svg id="thermometer_' + index + '" viewBox="0,0,130,400" preserveAspectRatio="xMidYMid meet"  >                                                             ');
+        svghtml.push('<svg id="thermometer_' + index + '" viewBox="-30,0,160,400" preserveAspectRatio="xMidYMid meet"  >                                                             ');
         svghtml.push('     <defs>                                                                                                                           ');
         svghtml.push('<linearGradient id="thermometer_bg_' + index + '" x1="1%" y1="20%" x2="100%" y2="20%">                                                                          ');
         svghtml.push('             <stop offset="10%" style="stop-color:#F0F0F0;stop-opacity:0.1" />                                                                     ');
