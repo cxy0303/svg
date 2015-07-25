@@ -1,0 +1,5 @@
+如果要实现拖拽和改变尺寸，
+首先要引用样式jquery-ui.min.css和jquery-ui.min.js
+然后分别设置属性：
+                draggable: true,
+                resizeable: true

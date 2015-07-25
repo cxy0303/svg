@@ -1,14 +1,42 @@
 ﻿(function ($) {
     $.fn.Humidity = function (options, value, isnormal) {
         var dft = {
-            px:undefined,              //相对与parentid x坐标
-            py:undefined,              //相对于parentid y坐标
+            px: undefined,              //相对与parentid x坐标
+            py: undefined,              //相对于parentid y坐标
             width: 120,         //面板宽度
             height: 150,        //面板高度
             current: 0,         //当前湿度
             unit: '',            //单位
             isnormal: 1,       //重量是否正常;1表示正常，0不正常
             title: '湿度'
+        }
+
+        this.Draggable = function () {
+            var main = this;
+            $(this).draggable({
+                addClasses: true,
+                containment: "parent",
+                opacity: 0.5,
+                stop: function (event, ui) {
+                    main.data("x", ui.position.left);
+                    main.data("y", ui.position.top);
+                }
+            });
+        }
+
+        this.Resizeable = function () {
+            var svg = this.svg;
+            var main = this;
+            $(this).resizable({
+                resize: function (event, ui) {
+                    svg.attr("height", ui.size.height);
+                    svg.attr("width", ui.size.width);
+                },
+                stop: function (event, ui) {
+                    main.data("w", ui.size.width);
+                    main.data("h", ui.size.height);
+                }
+            });
         }
 
         this.setCurrent = function (value, isnormal) {
@@ -61,9 +89,9 @@
                 $(this).css("position", "absolute");
                 $(this).css("top", opts.py);
                 $(this).css("left", opts.px);
-            }else{
-		$(this).css("margin", "auto");
-	    }
+            } else {
+                $(this).css("margin", "auto");
+            }
             this.empty();
             this.append($.fn.Humidity.GetHumidityHtml(this.Index));
             this.svg = Snap("#humidity_" + this.Index);
@@ -74,9 +102,26 @@
 
             this.svg.select("#t_title").attr({ text: opts.title });
 
+            if (opts.draggable)
+                this.Draggable();
+            if (opts.resizeable)
+                this.Resizeable();
+            if (opts.draggable || opts.resizeable) {
+                $(this).hover(function () {
+                    $(this).css("border", "1px dashed grey");
+                }, function () {
+                    $(this).css("border", "none");
+                })
+            }
+            $(this).css("cursor", "pointer");
+
             this.current = opts.min;
             this.opts = opts;
             this.data("opts", opts);
+            this.data("x", parseFloat($(this).css("left")));
+            this.data("y", parseFloat($(this).css("top")));
+            this.data("w", parseFloat($(this).css("width")));
+            this.data("h", parseFloat($(this).css("height")));
         }
 
         if (typeof options == "string") {
@@ -86,6 +131,13 @@
             this.current = this.data("current");
             if (options == "setcurrent") {
                 this.setCurrent(value, isnormal);
+            } else if (options == "getbox") {
+                return {
+                    x: parseInt(this.data("x")),
+                    y: parseInt(this.data("y")),
+                    w: parseInt(this.data("w")),
+                    h: parseInt(this.data("h"))
+                };
             }
         } else {
             var opts = $.extend(dft, options);

@@ -2,42 +2,60 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="css/jquery-ui.min.css" />
     <script type="text/javascript" src="Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="Scripts/jquery-ui.min.js"></script>
     <script type="text/javascript" src="Scripts/snap.min.js"></script>
     <script type="text/javascript" src="Scripts/sunagy.weightmeter.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#svg1").Weightmeter({
-                //parentid: 'test',      //容器
-                //px: 200,               //相对与parentid x坐标
-                //py: 200,               //相对于parentid y坐标
-                //parentid,px,py全部有值才有效
-                width: 180,            //面板宽度
-                height:50,           //面板高度
-                isnormal: 0,           //重量最小值
-                max: 100,               //最大值
-                min: 0,                 //最小值
-                current: 50,             //如果需要自动从服务器获取数据，格式为：{url:'',delay:3000}delay为读取服务器时间间隔，最小为3000（3s）
-                //current: {
-                //    url: 'getdata.aspx',//返回格式{current:40,isnormal:1}
-                //    delay: 3000
-                //},
-            }); 
+            //$("#svg1").Weightmeter({
+            //    parentid: 'test',
+            //    px: 10,
+            //    py: 10,
+            //    width: 100,
+            //    height: 88,
+            //    current: 550,
+            //    isnormal: 0,
+            //    max: 100,
+            //    min: 0,
+            //    current: {
+            //        url: 'getdata.aspx',//返回格式{current:40,isnormal:1}
+            //        delay: 3000
+            //    },
+            //});
 
-            $("#btnChange").click(function () {
-                var v = $("#txtval").val();
-                $("#svg1").Weightmeter('setcurrent', v, v > 750 ? 0 : 1);
+            $("#svg2").Weightmeter({
+                px: 200,
+                py: 200,
+                width: 380,
+                height: 200,
+                current: 550,
+                isnormal: 0,
+                max: 100,
+                min: 0,
+                current:20,
+                title: '重量',
+                draggable: true,
+                resizeable: true
+            });
+
+            $("#btnGet").click(function () {
+                var box = $("#svg2").Weightmeter("getbox");
+                $("#divval").html("x:" + box.x + "<br>y:" + box.y + "<br>width:" + box.w + "<br>height:" + box.h);
             })
         })
     </script>
     <title></title>
 </head>
 <body>
-    <input type="text" id="txtval" />
-    <input type="button" id="btnChange" value="确定" />
-    <div id="test" style="width:100%; text-align:center;">
+
+    <div id="test" style="width:100%; height:500px; text-align:center;">
+        <input id="btnGet" type="button" value="获取数据" />
+        <div id="divval"></div>
         <div id="svg1"></div>
+        <div id="svg2"></div>
     </div>
 </body>
 </html>

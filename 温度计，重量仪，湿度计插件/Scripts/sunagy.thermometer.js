@@ -9,28 +9,30 @@
             max: 50,            //温度最大值
             min: 0,             //温度最小值
             current: 0,         //当前温度
-            unit: '',            //单位
-            isnormal: 1,       //温度是否正常;1表示正常，0不正常
-            title: '温度'
+            unit: '',           //单位
+            isnormal: 1,        //温度是否正常;1表示正常，0不正常
+            title: '温度',      //标题说明  
+            draggable: false,    //是否可以基于父容器拖拽
+            resizeable: false,   //是否可以改变大小
         }
 
         this.SetTitle = function (title) {
-            var etitle = this.svg.getElementById("thermometer_txttitle_" + this.Tindex);
+            var etitle = this.svg.select("thermometer_txttitle_" + this.Tindex);
             if (etitle != null && etitle != undefined) {
-                etitle.textContent = title;
+                etitle.attr({ text: title });
             }
 
         }
 
         this.SetRange = function (maxnum, minnum) {
-            var max = this.svg.getElementById("thermometer_svg_max_" + this.Tindex);
-            var min = this.svg.getElementById("thermometer_svg_min_" + this.Tindex);
+            var max = this.svg.select("thermometer_svg_max_" + this.Tindex);
+            var min = this.svg.select("thermometer_svg_min_" + this.Tindex);
             this.Max = maxnum;
             this.Min = minnum;
             if (max != null && max != undefined)
-                max.textContent = maxnum;
+                max.attr({ text: maxnum });
             if (min != null && min != undefined)
-                min.textContent = minnum;
+                min.attr({ text: minnum });
         }
 
         this.SetCurrent = function (num, isnormal) {
@@ -50,7 +52,7 @@
             var toheight = heightsum - (num - this.Min) * 240 / value;
 
             rct_panel.animate({ height: toheight }, 1000, mina.Linear);
-            var txt_y = 305 - (num-this.Min) * 240 / value;
+            var txt_y = 305 - (num - this.Min) * 240 / value;
             txt_current.animate({ y: txt_y }, 1000, mina.linear);
             var opts = this.Opts;
             Snap.animate(parseFloat(txt_current.attr("text")), num, function (v) {
@@ -75,8 +77,37 @@
             txt_current.data("isnormal", isnormal);
         }
 
+        this.Draggable = function () {
+            var main = this;
+            $(this).draggable({
+                addClasses: true,
+                containment: "parent",
+                opacity: 0.5,
+                stop: function (event, ui) {
+                    main.data("x", ui.position.left);
+                    main.data("y", ui.position.top);
+                }
+            });
+        }
+
+        this.Resizeable = function () {
+            var svg = this.svg;
+            var main = this;
+            $(this).resizable({
+                resize: function (event, ui) {
+                    svg.attr("height", ui.size.height);
+                    svg.attr("width", ui.size.width);
+                },
+                stop: function (event, ui) {
+                    main.data("w", ui.size.width);
+                    main.data("h", ui.size.height);
+                }
+            });
+        }
+
         if (typeof options == "string") {
             var id = this.attr("id");
+            this.ID = id;
             this.Opts = this.data(id);
             this.Tindex = this.data(id + "_Tindex");
             var svg = this.find("svg")[0];
@@ -85,6 +116,13 @@
             this.Min = this.Opts.min;
             if (options == "setcurrent") {
                 this.SetCurrent(value, isnormal);
+            } else if (options == "getbox") {
+                return {
+                    x: parseInt(this.data("x")),
+                    y: parseInt(this.data("y")),
+                    w: parseInt(this.data("w")),
+                    h: parseInt(this.data("h"))
+                };
             }
         } else {
             var opts = $.extend(dft, options);
@@ -92,8 +130,8 @@
             this.Isnormal = opts.isnormal;
             this.Tindex = $.fn.Thermometer.index + 1;
             $(this).append($.fn.Thermometer.GetThermometerHtml(this.Tindex));
-            var svgs = $(this).find("svg");
-            var svg = svgs[0];
+            this.svg = Snap("#thermometer_" + this.Tindex);
+            var svg = this.svg;
             if (svg != null && svg != undefined) {
                 if (opts.px != undefined && opts.py != undefined) {
                     $(this).css("position", "absolute");
@@ -106,14 +144,26 @@
                 $(this).css("height", opts.height);
                 this.svg = svg;
                 var w = parseFloat(opts.width);
-                svg.style.width = w + "px";
+                svg.attr("width", w);
                 var h = parseFloat(opts.height);
-                svg.style.height = h + "px";
+                svg.attr("height", h);
 
                 if (opts.title != "" && opts.title != undefined) {
                     this.SetTitle(opts.title);
                 }
                 this.SetRange(opts.max, opts.min);
+                if (opts.draggable)
+                    this.Draggable();
+                if (opts.resizeable)
+                    this.Resizeable();
+                if (opts.draggable || opts.resizeable) {
+                    $(this).hover(function () {
+                        $(this).css("border", "1px dashed grey");
+                    }, function () {
+                        $(this).css("border", "none");
+                    })
+                }
+                $(this).css("cursor","pointer");
                 var obj = this;
                 var timer = undefined;
                 if (opts.current.url != undefined && opts.current.delay != undefined) {
@@ -135,7 +185,12 @@
                     this.SetCurrent(opts.current, opts.isnormal, null);
                 }
                 var id = this.attr("id");
-                this.data(id, opts)
+                this.ID = id;
+                this.data(id, opts);
+                this.data("x", parseFloat($(this).css("left")));
+                this.data("y", parseFloat($(this).css("top")));
+                this.data("w", parseFloat($(this).css("width")));
+                this.data("h", parseFloat($(this).css("height")));
                 this.data(id + "_Tindex", this.Tindex);
             }
         }
@@ -167,8 +222,8 @@
         svghtml.push('M50 120 h25 M60 108 h15 M60 96 h15  M60 84 h15  M60 72 h15                                                                            ');
         svghtml.push('M50 60 h25                                                                                                                            ');
         svghtml.push('" stroke="white" stroke-width="3"></path>                                                                                             ');
-        svghtml.push('        <text id="thermometer_txttitle_' + index + '" x="40%" y="360" font-size="150%" text-anchor="middle" font-weight="900" fill="#6fb4d1">温度</text>                                               ');
-        svghtml.push('        <text id="thermometer_svg_max_' + index + '" x="-20" y="65" font-weight="bolder" font-size="150%"  fill="#6fb4d1">100</text>                                                                                   ');
+        svghtml.push('        <text id="thermometer_txttitle_' + index + '" x="31%" y="360" font-size="150%" text-anchor="middle" font-weight="900" fill="#6fb4d1">温度</text>                                               ');
+        svghtml.push('        <text id="thermometer_svg_max_' + index + '" x="-15%" y="65" font-weight="bolder" font-size="150%"  fill="#6fb4d1">100</text>                                                                                   ');
         svghtml.push('        <text id="thermometer_svg_min_' + index + '" x="0" y="305" font-weight="bolder"   font-size="150%"  fill="#6fb4d1">0</text>                                                                                    ');
         svghtml.push('        <text id="thermometer_svg_current_' + index + '" x="90" y="320" font-weight="bolder" font-size="180%" fill="#32a5dc">0</text>       ');
         svghtml.push('    </svg>                                                                                                                            ');

@@ -9,11 +9,40 @@
             min: 0,             //重量最小值
             current: 0,         //当前重量
             unit: '',            //单位
-            isnormal: 1,       //重量是否正常;1表示正常，0不正常
-            title: '二楼会议室风机盘管风机模式设定'
+            isnormal: 1,       //重量是否正常;1表示正常，0不正常,
+            draggable: false,   //是否可以拖拽
+            title: '重量仪',
+            draggable: false,    //是否可以基于父容器拖拽
+            resizeable: false,   //是否可以改变大小
         }
 
+        this.Draggable = function () {
+            var main = this;
+            $(this).draggable({
+                addClasses: true,
+                containment: "parent",
+                opacity: 0.5,
+                stop: function (event, ui) {
+                    main.data("x", ui.position.left);
+                    main.data("y", ui.position.top);
+                }
+            });
+        }
 
+        this.Resizeable = function () {
+            var svg = this.svg;
+            var main = this;
+            $(this).resizable({
+                resize: function (event, ui) {
+                    svg.attr("height", ui.size.height);
+                    svg.attr("width", ui.size.width);
+                },
+                stop: function (event, ui) {
+                    main.data("w", ui.size.width);
+                    main.data("h", ui.size.height);
+                }
+            });
+        }
 
         this.setCurrent = function (val, isnormal) {
             if (this.current == value)
@@ -91,6 +120,19 @@
                 filter: shadow
             })
 
+            if (opts.draggable)
+                this.Draggable();
+            if (opts.resizeable)
+                this.Resizeable();
+            if (opts.draggable || opts.resizeable) {
+                $(this).hover(function () {
+                    $(this).css("border", "1px dashed grey");
+                }, function () {
+                    $(this).css("border", "none");
+                })
+            }
+            $(this).css("cursor", "pointer");
+
             this.svg.select("#t_title").attr({ text: opts.title });
             this.svg.select("#t_current").attr({ text: 0 });
             var v = (opts.max - opts.min) / 20;
@@ -102,6 +144,10 @@
             this.current = opts.min;
             this.opts = opts;
             this.data("opts", opts);
+            this.data("x", parseFloat($(this).css("left")));
+            this.data("y", parseFloat($(this).css("top")));
+            this.data("w", parseFloat($(this).css("width")));
+            this.data("h", parseFloat($(this).css("height")));
         }
 
         if (typeof options == "string") {
@@ -111,6 +157,13 @@
             this.current = this.data("current");
             if (options == "setcurrent") {
                 this.setCurrent(value, isnormal);
+            } else if (options == "getbox") {
+                return {
+                    x: parseInt(this.data("x")),
+                    y: parseInt(this.data("y")),
+                    w: parseInt(this.data("w")),
+                    h: parseInt(this.data("h"))
+                };
             }
         } else {
             var opts = $.extend(dft, options);
@@ -143,7 +196,7 @@
     }
     $.fn.Weightmeter.GetWeightmeterHtml = function (index) {
         var html = [];
-        html.push('<svg id="weightmeter_' + index + '"  viewBox="-10,0,380,200" preserveAspectRatio="xMidYMid none">');
+        html.push('<svg id="weightmeter_' + index + '"  viewBox="0,0,350,200"  preserveAspectRatio="xMidYMid meet">');
         html.push('<defs>');
         html.push('<linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">');
         html.push('                    <stop offset="0%" stop-color="#ECF5FF" stop-opacity="0"></stop>');
@@ -181,11 +234,11 @@
         html.push('</g>');
         html.push('<g font-weight="bolder" fill="#66B3FF" font-size="200%">');
 
-        html.push('<text x="65%" y="120" id="t_title" text-anchor="middle" font-size="90%">');
+        html.push('<text x="50%" y="120" id="t_title" text-anchor="middle" font-size="90%">');
         //html.push('<textPath     xlink:href="#textpath">');
         //html.push('</textPath>');
         html.push('</text>');
-        html.push('<text id="t_current"  x="47%" y="100%"  text-anchor="middle"  font-size="130%" >');
+        html.push('<text id="t_current"  x="50%" y="100%"  text-anchor="middle"  font-size="130%" >');
         html.push('<text>');
         html.push('</g>');
         html.push('<path id="pointer" d="M50 160 L175 152  L188 160 L188 160 L175 168z" fill="#00DB00" >');
