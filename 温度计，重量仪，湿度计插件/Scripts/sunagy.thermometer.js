@@ -134,8 +134,8 @@
             var svg = this.svg;
             if (svg != null && svg != undefined) {
                 if (opts.draggable) {
-                    var offset = { top: opts.py, left: opts.px };
-                    $(this).offset(offset);
+                    $(this).css("position", "absolute");
+                    $(this).animate({ "top": opts.py, "left": opts.px }, 0, null);
                 } else {
                     $(this).css("margin", "auto");
                 }
@@ -162,7 +162,7 @@
                         $(this).css("border", "none");
                     })
                 }
-                $(this).css("cursor","pointer");
+                $(this).css("cursor", "pointer");
                 var obj = this;
                 var timer = undefined;
                 if (opts.current.url != undefined && opts.current.delay != undefined) {

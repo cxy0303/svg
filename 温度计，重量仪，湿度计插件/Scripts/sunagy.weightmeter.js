@@ -96,8 +96,8 @@
             $(this).width(opts.width);
             $(this).height(opts.height);
             if (opts.draggable) {
-                var offset = { top: opts.py, left: opts.px };
-                $(this).offset(offset);
+                $(this).css("position", "absolute");
+                $(this).animate({ "top": opts.py, "left": opts.px }, 0, null);
             } else {
                 $(this).css("margin", "auto");
             }
