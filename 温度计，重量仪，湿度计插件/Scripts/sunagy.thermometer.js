@@ -134,9 +134,8 @@
             var svg = this.svg;
             if (svg != null && svg != undefined) {
                 if (opts.draggable) {
-                    $(this).css("position", "absolute");
-                    $(this).css("top", opts.py);
-                    $(this).css("left", opts.px);
+                    var offset = { top: opts.py, left: opts.px };
+                    $(this).offset(offset);
                 } else {
                     $(this).css("margin", "auto");
                 }
