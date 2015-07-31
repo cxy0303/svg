@@ -133,7 +133,11 @@
             this.svg = Snap("#thermometer_" + this.Tindex);
             var svg = this.svg;
             if (svg != null && svg != undefined) {
-                if (opts.draggable) {
+                if (!opts.draggable) {
+                    opts.px = undefined;
+                    opts.py = undefined;
+                }
+                if (opts.px != undefined && opts.py != undefined) {
                     $(this).css("position", "absolute");
                     $(this).animate({ "top": opts.py, "left": opts.px }, 0, null);
                 } else {
