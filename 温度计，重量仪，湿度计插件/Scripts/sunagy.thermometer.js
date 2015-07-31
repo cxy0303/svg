@@ -51,7 +51,11 @@
 
             //温度水银柱高度变化动画
             var fromheight = parseFloat(rct_panel.attr("height"));
-            var toheight = heightsum - (num - this.Min) * 240 / value;
+            var toheight = 0;
+            if (value == 0)
+                toheight = 0;
+            else
+                toheight = heightsum - (num - this.Min) * 240 / value;
 
             rct_panel.animate({ height: toheight }, 1000, mina.Linear);
             var txt_y = 305 - (num - this.Min) * 240 / value;
