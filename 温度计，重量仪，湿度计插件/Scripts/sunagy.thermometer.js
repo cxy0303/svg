@@ -1,15 +1,15 @@
 ﻿(function ($) {
     $.fn.Thermometer = function (options, value, isnormal) {
         var dft = {
-            px: undefined,              //相对与parentid x坐标
-            py: undefined,              //相对于parentid y坐标
+            px: 0,              //相对与parentid x坐标
+            py: 0,              //相对于parentid y坐标
             //parentid,px,py全部有值才有效
             width: 130,         //面板宽度
             height: 400,        //面板高度
             max: 50,            //温度最大值
             min: 0,             //温度最小值
-            current: 0,         //当前温度
-            unit: '',           //单位
+            current: 20,         //当前温度
+            unit: 'C',           //单位
             isnormal: 1,        //温度是否正常;1表示正常，0不正常
             title: '温度',      //标题说明  
             draggable: false,    //是否可以基于父容器拖拽
@@ -133,7 +133,7 @@
             this.svg = Snap("#thermometer_" + this.Tindex);
             var svg = this.svg;
             if (svg != null && svg != undefined) {
-                if (opts.px != undefined && opts.py != undefined) {
+                if (opts.draggable) {
                     $(this).css("position", "absolute");
                     $(this).css("top", opts.py);
                     $(this).css("left", opts.px);

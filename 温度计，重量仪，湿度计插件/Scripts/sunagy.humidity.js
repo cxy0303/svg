@@ -1,12 +1,12 @@
 ﻿(function ($) {
     $.fn.Humidity = function (options, value, isnormal) {
         var dft = {
-            px: undefined,              //相对与parentid x坐标
-            py: undefined,              //相对于parentid y坐标
+            px: 0,              //相对与parentid x坐标
+            py: 0,              //相对于parentid y坐标
             width: 120,         //面板宽度
             height: 150,        //面板高度
-            current: 0,         //当前湿度
-            unit: '',            //单位
+            current: 10,         //当前湿度
+            unit: '%',            //单位
             isnormal: 1,       //重量是否正常;1表示正常，0不正常
             title: '湿度'
         }
@@ -85,7 +85,7 @@
 
             $(this).width(opts.width);
             $(this).height(opts.height);
-            if (opts.px != undefined && opts.py != undefined) {
+            if (opts.draggable) {
                 $(this).css("position", "absolute");
                 $(this).css("top", opts.py);
                 $(this).css("left", opts.px);

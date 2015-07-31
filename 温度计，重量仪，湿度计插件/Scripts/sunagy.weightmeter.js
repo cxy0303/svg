@@ -1,14 +1,14 @@
 ﻿(function ($) {
     $.fn.Weightmeter = function (options, value, isnormal) {
         var dft = {
-            px: undefined,              //相对于父容器 x坐标
-            py: undefined,              //相对于父容器y坐标
+            px: 0,              //相对于父容器 x坐标
+            py: 0,              //相对于父容器y坐标
             width: 130,         //面板宽度
             height: 400,        //面板高度
             max: 50,            //重量最大值
             min: 0,             //重量最小值
-            current: 0,         //当前重量
-            unit: '',            //单位
+            current: 20,         //当前重量
+            unit: 'kg',            //单位
             isnormal: 1,       //重量是否正常;1表示正常，0不正常,
             draggable: false,   //是否可以拖拽
             title: '重量仪',
@@ -83,9 +83,9 @@
                 pointer.animate({ fill: '#00DB00' }, 2000, mina.bounce);
                 t_current.animate({ fill: '#00DB00' }, 2000, mina.bounce);
             } else if (0 == isnormal) {
-                movepath.animate({ fill: '#ff0000' }, 2000, mina.bounce);
-                pointer.animate({ fill: '#ff0000' }, 2000, mina.bounce);
-                t_current.animate({ fill: '#ff0000' }, 2000, mina.bounce);
+                movepath.animate({ fill: '#FF0033' }, 2000, mina.bounce);
+                pointer.animate({ fill: '#FF0033' }, 2000, mina.bounce);
+                t_current.animate({ fill: '#FF0033' }, 2000, mina.bounce);
             }
 
             this.current = val;
@@ -95,7 +95,7 @@
         this.intil = function (opts) {
             $(this).width(opts.width);
             $(this).height(opts.height);
-            if (opts.px != undefined && opts.py != undefined) {
+            if (opts.draggable) {
                 $(this).css("position", "absolute");
                 $(this).css("top", opts.py);
                 $(this).css("left", opts.px);
@@ -228,7 +228,7 @@
 
         html.push('<g id="gpath" clip-path="url(#scale)">');
         html.push('<path d="M30 162 A95,96 1 1 1 320,162z" fill="#66B3FF"></path>');
-        html.push('<path id="movepath" d="M30 162 A95,96 1 1 0 320,162z" fill="#00DB00" ">');
+        html.push('<path id="movepath" d="M30 162 A95,96 1 1 0 320,162z" fill="#00CC99" ">');
         html.push('</path>');
 
         html.push('</g>');
@@ -241,7 +241,7 @@
         html.push('<text id="t_current"  x="50%" y="100%"  text-anchor="middle"  font-size="130%" >');
         html.push('<text>');
         html.push('</g>');
-        html.push('<path id="pointer" d="M50 160 L175 152  L188 160 L188 160 L175 168z" fill="#00DB00" >');
+        html.push('<path id="pointer" d="M50 160 L175 152  L188 160 L188 160 L175 168z" fill="#00CC99" >');
         html.push('</path>');
         html.push('<circle cx="175" stroke="white" stroke-width="1" cy="160" r="2" fill="white"></circle>');
         html.push('</svg>');
