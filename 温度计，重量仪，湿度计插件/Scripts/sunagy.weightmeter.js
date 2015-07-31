@@ -95,10 +95,6 @@
         this.intil = function (opts) {
             $(this).width(opts.width);
             $(this).height(opts.height);
-            if (!opts.draggable) {
-                opts.px = undefined;
-                opts.py = undefined;
-            }
             if (opts.px != undefined && opts.py != undefined) {
                 $(this).css("position", "absolute");
                 $(this).animate({ "top": opts.py, "left": opts.px }, 0, null);
