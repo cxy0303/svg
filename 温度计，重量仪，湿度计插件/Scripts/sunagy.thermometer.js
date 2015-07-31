@@ -36,6 +36,8 @@
         }
 
         this.SetCurrent = function (num, isnormal) {
+            if (isNaN(num))
+                num = this.Min;
             if (num < this.Min)
                 num = this.Min;
             if (num > this.Max)

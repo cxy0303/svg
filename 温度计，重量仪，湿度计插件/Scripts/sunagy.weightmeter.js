@@ -45,10 +45,13 @@
         }
 
         this.setCurrent = function (val, isnormal) {
+            if (isNaN(val))
+                val = this.opts.min;
             if (this.current == value)
                 return;
 
             var temp = val;
+
 
             if (val < this.opts.min)
                 temp = this.opts.min;
