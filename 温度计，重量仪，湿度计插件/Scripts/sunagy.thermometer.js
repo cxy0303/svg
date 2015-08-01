@@ -17,7 +17,7 @@
         }
 
         this.SetTitle = function (title) {
-            var etitle = this.svg.select("thermometer_txttitle_" + this.Tindex);
+            var etitle = this.svg.select("#thermometer_txttitle_" + this.Tindex);
             if (etitle != null && etitle != undefined) {
                 etitle.attr({ text: title });
             }
@@ -25,8 +25,8 @@
         }
 
         this.SetRange = function (maxnum, minnum) {
-            var max = this.svg.select("thermometer_svg_max_" + this.Tindex);
-            var min = this.svg.select("thermometer_svg_min_" + this.Tindex);
+            var max = this.svg.select("#thermometer_svg_max_" + this.Tindex);
+            var min = this.svg.select("#thermometer_svg_min_" + this.Tindex);
             this.Max = maxnum;
             this.Min = minnum;
             if (max != null && max != undefined)
