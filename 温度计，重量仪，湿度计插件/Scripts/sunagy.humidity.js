@@ -85,8 +85,8 @@
 
         this.intil = function (opts) {
 
-            $(this).width(opts.width);
-            $(this).height(opts.height);
+            $(this).width(opts.width <= 0 ? 50 : opts.width);
+            $(this).height(opts.height <= 0 ? 50 : opts.height);
             if (opts.px != undefined && opts.py != undefined) {
                 $(this).css("position", "absolute");
                 $(this).animate({ "top": opts.py, "left": opts.px }, 0, null);

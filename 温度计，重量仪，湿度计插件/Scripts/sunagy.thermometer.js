@@ -145,8 +145,8 @@
                 } else {
                     $(this).css("margin", "auto");
                 }
-                $(this).css("width", opts.width);
-                $(this).css("height", opts.height);
+                $(this).css("width", opts.width <= 0 ? 50 : opts.width);
+                $(this).css("height", opts.height <= 0 ? 50 : opts.height);
                 this.svg = svg;
                 var w = parseFloat(opts.width);
                 svg.attr("width", w);
