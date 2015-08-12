@@ -63,7 +63,9 @@
             var opts = this.Opts;
             Snap.animate(parseFloat(txt_current.attr("text")), num, function (v) {
                 txt_current.attr({ text: parseInt(v) + opts.unit });
-            }, 1000)
+            }, 1000, mina.linear, function () {
+                txt_current.attr({ text: num + opts.unit });
+            })
 
             var cIsnormal = txt_current.data("isnormal") == undefined ? 1 : txt_current.data("isnormal");
 
@@ -148,9 +150,9 @@
                 $(this).css("width", opts.width <= 0 ? 50 : opts.width);
                 $(this).css("height", opts.height <= 0 ? 50 : opts.height);
                 this.svg = svg;
-                var w = parseFloat(opts.width);
+                var w = parseFloat(opts.width <= 0 ? 50 : opts.width);
                 svg.attr("width", w);
-                var h = parseFloat(opts.height);
+                var h = parseFloat(opts.height <= 0 ? 50 : opts.height);
                 svg.attr("height", h);
 
                 if (opts.title != "" && opts.title != undefined) {

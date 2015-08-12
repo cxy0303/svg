@@ -78,7 +78,9 @@
             Snap.animate(this.current, val, function (num) {
                 num = parseInt(num);
                 t_current.attr({ text: num + opts.unit });
-            }, 1000);
+            }, 1000, mina.linear, function () {
+                t_current.attr({ text: val + opts.unit });
+            });
 
 
             if (1 == isnormal) {
@@ -109,8 +111,8 @@
             this.svg = Snap("#weightmeter_" + this.Index);
             if (this.svg == null || this.svg == undefined)
                 return;
-            this.svg.attr("width", opts.width);
-            this.svg.attr("height", opts.height);
+            this.svg.attr("width", opts.width <= 0 ? 50 : opts.width);
+            this.svg.attr("height", opts.height <= 0 ? 50 : opts.height);
 
             var shadow = this.svg.paper.filter(Snap.filter.shadow(-2, 2, 3));
             var path = this.svg.select("#panel").attr({

@@ -61,14 +61,18 @@
                     rct_panel.animate({ height: toheight }, 500, mina.bounce);
                     Snap.animate(parseInt(t_current.attr("text")), value, function (v) {
                         t_current.attr({ text: parseInt(v) + opts.unit });
-                    }, 250);
+                    }, 250, mina.linear, function () {
+                        t_current.attr({ text: value + opts.unit });
+                    });
                 })
             } else {
                 rct_panel.animate({ height: toheight }, 500, mina.linear, function () {
                     rct_panelpre.animate({ height: toheight }, 500, mina.bounce);
                     Snap.animate(parseInt(t_current.attr("text")), value, function (v) {
                         t_current.attr({ text: parseInt(v) + opts.unit });
-                    }, 250);
+                    }, 250, mina.linear, function () {
+                        t_current.attr({ text: value + opts.unit });
+                    });
                 })
             }
 
@@ -98,8 +102,8 @@
             this.svg = Snap("#humidity_" + this.Index);
             if (this.svg == null || this.svg == undefined)
                 return;
-            this.svg.attr("width", opts.width);
-            this.svg.attr("height", opts.height);
+            this.svg.attr("width", opts.width <= 0 ? 50 : opts.width);
+            this.svg.attr("height", opts.height <= 0 ? 50 : opts.height);
 
             this.svg.select("#t_title").attr({ text: opts.title });
 
