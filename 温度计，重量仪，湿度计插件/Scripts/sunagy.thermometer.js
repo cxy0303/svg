@@ -139,6 +139,10 @@
             }
         } else {
             var opts = $.extend(dft, options);
+            if (opts.px < 0)
+                opts.px = undefined;
+            if (opts.py < 0)
+                opts.py = undefined;
             this.Opts = opts;
             this.Isnormal = opts.isnormal;
             this.Tindex = $.fn.Thermometer.index + 1;

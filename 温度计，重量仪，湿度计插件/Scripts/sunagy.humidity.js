@@ -146,6 +146,10 @@
             }
         } else {
             var opts = $.extend(dft, options);
+            if (opts.px < 0)
+                opts.px = undefined;
+            if (opts.py < 0)
+                opts.py = undefined;
             var container = this;
             $.fn.Humidity.index += 1
             this.Index = $.fn.Humidity.index;
