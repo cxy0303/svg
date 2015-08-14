@@ -52,13 +52,18 @@
             //温度水银柱高度变化动画
             var fromheight = parseFloat(rct_panel.attr("height"));
             var toheight = 0;
-            if (value == 0)
+            var txt_y = 0;
+            if (value == 0) {
                 toheight = 0;
-            else
+                txt_y = 0;
+            }
+            else {
                 toheight = heightsum - (num - this.Min) * 240 / value;
+                txt_y = 305 - (num - this.Min) * 240 / value;
+            }
 
             rct_panel.animate({ height: toheight }, 1000, mina.Linear);
-            var txt_y = 305 - (num - this.Min) * 240 / value;
+
             txt_current.animate({ y: txt_y }, 1000, mina.linear);
             var opts = this.Opts;
             Snap.animate(parseFloat(txt_current.attr("text")), num, function (v) {

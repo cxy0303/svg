@@ -12,6 +12,7 @@
             isnormal: 1,       //重量是否正常;1表示正常，0不正常,
             draggable: false,   //是否可以拖拽
             title: '重量仪',
+            titlesize: '130%',
             draggable: false,    //是否可以基于父容器拖拽
             resizeable: false,   //是否可以改变大小
         }
@@ -138,6 +139,7 @@
             $(this).css("cursor", "pointer");
 
             this.svg.select("#t_title").attr({ text: opts.title });
+            this.svg.select("#t_title").attr({ "font-size": opts.titlesize });
             this.svg.select("#t_current").attr({ text: 0 });
             var v = (opts.max - opts.min) / 20;
             this.svg.select('#t1').attr({ text: opts.min });
